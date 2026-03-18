@@ -1,0 +1,26 @@
+<style>
+  nav {
+    display: flex;
+    justify-content: space-around;
+    background-color: #212121;
+    color: white;
+    padding: 10px;
+  }
+
+  nav a {
+    color: white;
+    text-decoration: none;
+  }
+
+  nav a:hover {
+    font-size: 24px;
+  }
+  nav a.active {
+    color: red;
+  }
+</style>
+<nav>
+  <a routerLink="/" routerLinkActive="active" [routerLinkActiveOptions]="{exact: true}">Home</a>
+  <a [routerLink]="['/pokemons']" [routerLinkActive]="'active'">Pokemon</a>
+  <a [routerLink]="['/simpsons']" [routerLinkActive]="'active'">The Simpsons</a>
+</nav>

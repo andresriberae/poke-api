@@ -1,0 +1,32 @@
+<h1 class="fs-3">Pokemon Details: {{ pokemon()?.name | titlecase }}</h1>
+
+<br class="" />
+
+<div class="row row-cols-1 row-cols-sm-2 g-4">
+  <div class="col">
+    <div href="#" class="card" style="width: 18rem">
+      <img
+        [src]="pokemon()?.sprites?.front_default"
+        class="card-img-top w-100"
+        alt="..."
+      />
+    </div>
+  </div>
+
+  <div class="col">
+    <div class="card" style="width: 18rem">
+      <div class="card-body">
+        <h5 class="card-title fw-bold">{{ pokemon()?.name | titlecase }}</h5>
+        <p class="card-text">
+          Some quick example text to build on the card title and make up the
+          bulk of the card's content.
+        </p>
+      </div>
+      <ul class="list-group list-group-flush">
+        <li class="list-group-item">
+          Height: <span>{{ pokemon()?.height }}</span>
+        </li>
+      </ul>
+    </div>
+  </div>
+</div>

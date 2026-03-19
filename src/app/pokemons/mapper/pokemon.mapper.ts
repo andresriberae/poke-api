@@ -1,20 +1,16 @@
-import { PokeResult } from '../interfaces/poke.interface';
+import { PokeApiResponse } from '../interfaces/poke-api.interfaces';
 import { Pokemon } from '../interfaces/pokemon.interface';
 
 export class PokeMapper {
-
-  static mapToPokemon(item: PokeResult, index: number): Pokemon {
+  static mapToPokemon(item: PokeApiResponse, index: number): Pokemon {
     return {
       id: index + 1,
       name: item.name,
-      image: `https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/${index + 1}.png`
+      image: item.sprites.other?.['official-artwork'].front_default,
     };
   }
 
-  static mapArray(items: PokeResult[]): Pokemon[] {
-    return items.map((item, index) =>
-      this.mapToPokemon(item, index)
-    );
+  static mapArray(items: PokeApiResponse[]): Pokemon[] {
+    return items.map((item, index) => this.mapToPokemon(item, index));
   }
-
 }

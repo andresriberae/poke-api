@@ -1,3 +1,6 @@
+// Interface que arroja el get https://thesimpsonsapi.com/api/characters/5
+// para obtener los valores de un item especifico
+
 export interface SimpsonsResponse {
   id: number;
   age: number;

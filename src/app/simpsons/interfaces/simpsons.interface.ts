@@ -1,16 +1,6 @@
-export interface SimpsonsAPI {
-  count: number;
-  next: string;
-  previous: null;
-  results: SimpsonsResult[];
-}
-
-export interface SimpsonsResult {
-  name: string;
-  url: string;
-}
-
+// Mi propia interface
 export interface Simpsons {
+  id: number;
   name: string;
   image: string;
 }

@@ -1,15 +1,16 @@
-import { SimpsonsResult } from '../interfaces/simpsons.interface';
+import { SimpsonsResult } from '../interfaces/simpsons-api.interface';
 import { Simpsons } from '../interfaces/simpsons.interface';
 
-export class PokeMapper {
-  static mapToPokemon(item: SimpsonsResult, index: number): Simpsons {
+export class SimpMapper {
+  static mapToSimpsons(item: SimpsonsResult): Simpsons {
     return {
+      id: item.id,
       name: item.name,
-      image: `https://cdn.thesimpsonsapi.com/500/character/${index + 1}.webp`,
+      image: `https://cdn.thesimpsonsapi.com/500${item.portrait_path}`,
     };
   }
 
   static mapArray(items: SimpsonsResult[]): Simpsons[] {
-    return items.map((item, index) => this.mapToPokemon(item, index));
+    return items.map((item) => this.mapToSimpsons(item));
   }
 }

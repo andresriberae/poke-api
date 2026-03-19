@@ -5,7 +5,7 @@ export class PokeMapper {
   static mapToPokemon(item: SimpsonsResult, index: number): Simpsons {
     return {
       name: item.name,
-      image: `https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/${index + 1}.png`,
+      image: `https://cdn.thesimpsonsapi.com/500/character/${index + 1}.webp`,
     };
   }
 

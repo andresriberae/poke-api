@@ -22,7 +22,7 @@ export const routes: Routes = [
       import('./simpsons/pages/CharacterList/CharacterList-page.component'),
   },
   {
-    path: 'simpsons/:name',
+    path: 'simpsons/:id',
     loadComponent: () =>
       import('./simpsons/pages/CharacterDetails/CharacterDetails-page.component'),
   },

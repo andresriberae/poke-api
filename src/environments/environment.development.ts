@@ -3,4 +3,5 @@ export const environment = {
 
   ApiUrlPokedesk: 'https://pokeapi.co/api/v2/pokemon',
   ApiUrlSimpsons: 'https://thesimpsonsapi.com/api/characters',
+  pathImageSimpsons: 'https://cdn.thesimpsonsapi.com/500',
 };

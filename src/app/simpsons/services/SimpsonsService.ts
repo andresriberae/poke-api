@@ -1,8 +1,9 @@
 import { inject, Injectable, signal } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
-import { SimpsonsAPI, Simpsons } from '../interfaces/simpsons.interface';
-import { PokeMapper } from '../mapper/simpsons.mapper';
+import { SimpsonsAPI } from '../interfaces/simpsons-api.interface';
+import { SimpMapper } from '../mapper/simpsons.mapper';
 import { environment } from '@environments/environment';
+import { Simpsons } from '../interfaces/simpsons.interface';
 
 @Injectable({
   providedIn: 'root',
@@ -13,10 +14,10 @@ export class SimpsonsService {
   simpsons = signal<Simpsons[]>([]);
 
   constructor() {
-    this.loadPokemons();
+    this.loadSimpsons();
   }
 
-  loadPokemons() {
+  loadSimpsons() {
     this.http
       .get<SimpsonsAPI>(`${environment.ApiUrlSimpsons}`, {
         params: {
@@ -25,13 +26,13 @@ export class SimpsonsService {
         },
       })
       .subscribe((resp) => {
-        const mapped = PokeMapper.mapArray(resp.results);
+        const mapped = SimpMapper.mapArray(resp.results);
         this.simpsons.set(mapped);
       });
   }
 
-  getPokemonByName(name: string) {
-    const pokemon = this.http.get<any>(`${environment.ApiUrlSimpsons}/${name}`);
-    return pokemon;
+  getSimpsonsById(id: number) {
+    const simpson = this.http.get<any>(`${environment.ApiUrlSimpsons}/${id}`);
+    return simpson;
   }
 }

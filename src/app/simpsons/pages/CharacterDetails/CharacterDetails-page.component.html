@@ -1,31 +1,63 @@
-<h1 class="fs-3">Pokemon Details: {{ simpsons()?.name | titlecase }}</h1>
+<div class="container py-4">
+  <!-- Título -->
+  <h1 class="display-4 text-center fw-bold mb-4">
+    {{ simpsons()?.name | titlecase }}
+  </h1>
 
-<br class="" />
-
-<div class="row row-cols-1 row-cols-sm-2 g-4">
-  <div class="col">
-    <div href="#" class="card" style="width: 18rem">
-      <!-- <img
-        [src]="simpsons()?."
-        class="card-img-top w-100"
-        alt="..."
-      /> -->
+  <hr class="py-3" />
+  <div class="row align-items-center g-4">
+    <!-- Imagen -->
+    <div class="col-12 col-md-5 text-center">
+      <img
+        [src]="image()"
+        class="img-fluid rounded-4 shadow"
+        alt="simpsons-image"
+        style="max-height: 400px; object-fit: contain"
+      />
     </div>
-  </div>
 
-  <div class="col">
-    <div class="card" style="width: 18rem">
-      <div class="card-body">
-        <h5 class="card-title fw-bold">{{ simpsons()?.name | titlecase }}</h5>
-        <p class="card-text">
-          {{ simpsons()?.description }}
-        </p>
+    <!-- Información -->
+    <div class="col-12 col-md-7">
+      <div class="card border-0 shadow-lg rounded-4">
+        <div class="card-body p-4">
+          <h4 class="card-title fw-bold mb-3">
+            {{ simpsons()?.name | titlecase }}
+          </h4>
+
+          <p class="card-text text-muted mb-4">
+            {{ simpsons()?.description }}
+          </p>
+
+          <div class="row g-3">
+            <div class="col-6">
+              <div class="p-3 bg-light rounded-3">
+                <small class="text-muted">Age</small>
+                <div class="fw-semibold">
+                  {{ simpsons()?.age }}
+                </div>
+              </div>
+            </div>
+
+            <div class="col-6">
+              <div class="p-3 bg-light rounded-3">
+                <small class="text-muted">Occupation</small>
+                <div class="fw-semibold">
+                  {{ simpsons()?.occupation }}
+                </div>
+              </div>
+            </div>
+
+            <div class="col-12">
+              <div class="p-3 bg-light rounded-3">
+                <small class="text-muted">Status</small>
+                <div class="fw-semibold">
+                  {{ simpsons()?.status }}
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
       </div>
-      <ul class="list-group list-group-flush">
-        <li class="list-group-item">
-          Age: <span>{{ simpsons()?.age }}</span>
-        </li>
-      </ul>
     </div>
   </div>
 </div>

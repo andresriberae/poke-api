@@ -1,1 +1,99 @@
-<h1>Dashboard</h1>
+<style>
+  /* Card base */
+  .home-card {
+    position: relative;
+    height: 280px;
+    border-radius: 20px;
+    overflow: hidden;
+    color: white;
+    display: flex;
+    align-items: flex-end;
+    padding: 20px;
+    transition: all 0.3s ease;
+  }
+
+  /* Hover */
+  .home-card:hover {
+    transform: scale(1.03);
+    box-shadow: 0 20px 40px rgba(0, 0, 0, 0.2);
+  }
+
+  /* Overlay oscuro */
+  .home-card .overlay {
+    position: absolute;
+    inset: 0;
+    background: rgba(0, 0, 0, 0.4);
+  }
+
+  /* Contenido */
+  .home-card .content {
+    position: relative;
+    z-index: 2;
+  }
+
+  /* Fondo Pokémon */
+  .pokemon-bg {
+    background:
+      url("https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/25.png")
+        center/contain no-repeat,
+      linear-gradient(135deg, #ffcb05, #f57f17);
+  }
+
+  /* Fondo Simpsons */
+  .simpsons-bg {
+    background:
+      url("https://upload.wikimedia.org/wikipedia/en/0/02/Homer_Simpson_2006.png")
+        center/contain no-repeat,
+      linear-gradient(135deg, #ffd90f, #f4a261);
+  }
+  .home-card {
+    opacity: 0;
+    transform: translateY(20px);
+    animation: fadeInUp 0.6s ease forwards;
+  }
+
+  @keyframes fadeInUp {
+    to {
+      opacity: 1;
+      transform: translateY(0);
+    }
+  }
+</style>
+<div class="container py-5">
+  <!-- Título principal -->
+  <div class="text-center mb-5">
+    <h1 class="display-4 fw-bold">Welcome</h1>
+    <p class="text-muted">Explora personajes de Pokémon y The Simpsons</p>
+  </div>
+
+  <!-- Opciones -->
+  <div class="row g-4 justify-content-center text-center">
+    <!-- Pokemon -->
+    <div class="col-12 col-md-6 col-lg-5">
+      <a [routerLink]="['/pokemons']" class="text-decoration-none">
+        <div class="home-card pokemon-bg">
+          <div class="overlay"></div>
+
+          <div class="content">
+            <h2 class="fw-bold">Pokémon</h2>
+            <p>Explora todos los Pokémon</p>
+          </div>
+        </div>
+      </a>
+    </div>
+
+    <!-- Simpsons -->
+    <div class="col-12 col-md-6 col-lg-5">
+      <a [routerLink]="['/simpsons']" class="text-decoration-none">
+        <div class="home-card simpsons-bg">
+          <div class="overlay"></div>
+
+          <div class="content">
+            <h2 class="fw-bold">The Simpsons</h2>
+            <p>Descubre los personajes</p>
+          </div>
+        </div>
+      </a>
+    </div>
+  </div>
+</div>

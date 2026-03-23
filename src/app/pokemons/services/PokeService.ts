@@ -2,7 +2,7 @@ import { inject, Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { PokeAPI } from '../interfaces/poke.interface';
 import { environment } from '@environments/environment';
-import { map } from 'rxjs';
+import { forkJoin, switchMap } from 'rxjs';
 import { PokeApiResponse } from '../interfaces/poke-api.interfaces';
 
 @Injectable({
@@ -20,12 +20,10 @@ export class PokemonService {
         },
       })
       .pipe(
-        map((resp) =>
-          resp.results.map((pokemon) => ({
-            name: pokemon.name,
-            id: this.extractId(pokemon.url),
-            image: `https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/${this.extractId(pokemon.url)}.png`,
-          })),
+        switchMap((resp) =>
+          forkJoin(
+            resp.results.map((pokemon) => this.getPokemonByName(pokemon.name)),
+          ),
         ),
       );
   }

@@ -25,22 +25,25 @@
   .info-box:hover {
     background: #e9ecef;
   }
+
+  /* Progress bars */
+  .progress {
+    background-color: #e9ecef;
+    border-radius: 10px;
+  }
+
+  .progress-bar {
+    border-radius: 10px;
+  }
 </style>
+
 <div class="container py-4">
-  <!-- Título -->
-  <h1 class="display-5 fw-bold text-center mb-4">
-    {{ pokemon()?.name | titlecase }}
-  </h1>
-
-  <!-- Divider -->
-  <hr class="mb-5" />
-
   <div class="row align-items-center g-4">
     <!-- Imagen -->
     <div class="col-12 col-md-5 text-center">
       <div class="pokemon-detail-card p-4 rounded-4 shadow-sm">
         <img
-          [src]="pokemon()?.sprites?.front_default"
+          [src]="pokemon()?.sprites?.other?.['official-artwork']?.front_default"
           class="img-fluid"
           alt="pokemon-image"
           style="max-height: 350px"
@@ -56,12 +59,21 @@
             {{ pokemon()?.name | titlecase }}
           </h4>
 
+          <!-- Tipos -->
+          <div class="mb-3">
+            @for (type of pokemon()?.types ?? []; track type.type.name) {
+              <span class="badge me-2 text-capitalize bg-primary">
+                {{ type.type.name }}
+              </span>
+            }
+          </div>
+
           <p class="text-muted mb-4">
             Pokémon básico obtenido desde la API. Aquí puedes agregar
             descripción dinámica si luego la integras.
           </p>
 
-          <!-- Stats -->
+          <!-- Info básica -->
           <div class="row g-3">
             <div class="col-6">
               <div class="info-box">
@@ -89,6 +101,41 @@
                 </div>
               </div>
             </div>
+          </div>
+
+          <!-- Stats -->
+          <div class="mt-4">
+            <h6 class="fw-bold">Stats</h6>
+
+            @for (stat of pokemon()?.stats ?? []; track stat.stat.name) {
+              <div class="mb-2">
+                <small class="text-capitalize">
+                  {{ stat.stat.name }}
+                </small>
+
+                <div class="progress" style="height: 8px">
+                  <div
+                    class="progress-bar"
+                    role="progressbar"
+                    [style.width.%]="stat.base_stat"
+                  ></div>
+                </div>
+              </div>
+            }
+          </div>
+
+          <!-- Habilidades -->
+          <div class="mt-4">
+            <h6 class="fw-bold">Abilities</h6>
+
+            @for (
+              ability of pokemon()?.abilities ?? [];
+              track ability.ability?.name
+            ) {
+              <span class="badge bg-secondary me-2 text-capitalize">
+                {{ ability.ability?.name }}
+              </span>
+            }
           </div>
         </div>
       </div>

@@ -13,15 +13,13 @@ import { PokeApiResponse } from '../../interfaces/poke-api.interfaces';
   templateUrl: './PokemonDetails-page.component.html',
 })
 export default class PokemonDetailsPageComponent {
-
   pokemonService = inject(PokemonService);
 
-  pokemon = toSignal<PokeApiResponse>(
+  pokemon = toSignal<PokeApiResponse | null>(
     inject(ActivatedRoute).params.pipe(
-      map(params => params['name']),
-      switchMap(name => this.pokemonService.getPokemonByName(name))
+      map((params) => params['name']),
+      switchMap((name) => this.pokemonService.getPokemonByName(name)),
     ),
-    { initialValue: null }
+    { initialValue: null },
   );
-
 }

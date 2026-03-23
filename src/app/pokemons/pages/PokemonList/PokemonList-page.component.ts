@@ -2,7 +2,7 @@ import { Component, inject } from '@angular/core';
 import { PokemonService } from '../../services/PokeService';
 import { RouterLink } from '@angular/router';
 import { TitleCasePipe } from '@angular/common';
-
+import { toSignal } from '@angular/core/rxjs-interop';
 
 @Component({
   selector: 'pokemon-list',
@@ -11,6 +11,7 @@ import { TitleCasePipe } from '@angular/common';
   templateUrl: './PokemonList-page.component.html',
 })
 export default class PokemonListPageComponent {
-  pokemonService = inject(PokemonService);
-  pokemons = this.pokemonService.pokemons;
+  private pokemonService = inject(PokemonService);
+
+  pokemon = toSignal(this.pokemonService.getPokemons(), { initialValue: [] });
 }

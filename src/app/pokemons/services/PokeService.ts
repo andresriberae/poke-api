@@ -1,39 +1,49 @@
-import { inject, Injectable, signal } from '@angular/core';
+import { inject, Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { PokeAPI } from '../interfaces/poke.interface';
-import { Pokemon } from '../interfaces/pokemon.interface';
-import { PokeMapper } from '../mapper/pokemon.mapper';
 import { environment } from '@environments/environment';
+import { map } from 'rxjs';
+import { PokeApiResponse } from '../interfaces/poke-api.interfaces';
 
 @Injectable({
-  providedIn: 'root'
+  providedIn: 'root',
 })
 export class PokemonService {
-
   private http = inject(HttpClient);
 
-  pokemons = signal<Pokemon[]>([]);
-
-  constructor() {
-    this.loadPokemons();
+  getPokemons() {
+    return this.http
+      .get<PokeAPI>(`${environment.ApiUrlPokedesk}/pokemon/`, {
+        params: {
+          limit: 10,
+          offset: 0,
+        },
+      })
+      .pipe(
+        map((resp) =>
+          resp.results.map((pokemon) => ({
+            name: pokemon.name,
+            id: this.extractId(pokemon.url),
+            image: `https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/${this.extractId(pokemon.url)}.png`,
+          })),
+        ),
+      );
   }
 
-  loadPokemons() {
-    this.http.get<PokeAPI>(`${environment.ApiUrlPokedesk}`, {
-      params: {
-        limit: 20,
-        offset: 0
-      }
-    })
-      .subscribe(resp => {
-        const mapped = PokeMapper.mapArray(resp.results);
-        this.pokemons.set(mapped);
-      });
+  getPokemonById(id: string) {
+    return this.http.get<PokeApiResponse>(
+      `${environment.ApiUrlPokedesk}/pokemon/${id}`,
+    );
   }
 
   getPokemonByName(name: string) {
-    const pokemon= this.http.get<any>(`${environment.ApiUrlPokedesk}/${name}`);
-    return pokemon;
+    return this.http.get<PokeApiResponse>(
+      `https://pokeapi.co/api/v2/pokemon/${name}`,
+    );
   }
 
+  private extractId(url: string): string {
+    const parts = url.split('/');
+    return parts[parts.length - 2];
+  }
 }

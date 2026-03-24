@@ -1,4 +1,4 @@
-import { inject, Injectable } from '@angular/core';
+import { inject, Injectable, signal } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { PokeAPI } from '../interfaces/poke.interface';
 import { environment } from '@environments/environment';
@@ -11,7 +11,13 @@ import { PokeApiResponse } from '../interfaces/poke-api.interfaces';
 export class PokemonService {
   private http = inject(HttpClient);
 
-  getPokemons() {
+  pokemones = signal<PokeApiResponse[]>([]);
+
+  constructor() {
+    this.loadPokemons();
+  }
+
+  loadPokemons() {
     return this.http
       .get<PokeAPI>(`${environment.ApiUrlPokedesk}/pokemon/`, {
         params: {
@@ -25,7 +31,10 @@ export class PokemonService {
             resp.results.map((pokemon) => this.getPokemonByName(pokemon.name)),
           ),
         ),
-      );
+      )
+      .subscribe((resp) => {
+        this.pokemones.set(resp);
+      });
   }
 
   getPokemonById(id: string) {

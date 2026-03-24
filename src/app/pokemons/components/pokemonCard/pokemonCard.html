@@ -1,21 +1,105 @@
-@for (item of pokemones(); track item.id) {
-<div class="col-12 col-sm-6 col-md-4 col-lg-3">
-  <a [routerLink]="['/pokemons', item.id]" class="text-decoration-none">
-    <div
-      class="card pokemon-card h-100 border-0 shadow-sm rounded-4 text-center p-3"
-    >
-      <!-- Imagen -->
-      <div class="pokemon-img-wrapper mb-3">
-        <img
-          [src]="item.sprites.other?.['official-artwork']?.front_default"
-          alt="pokemon-image"
-          class="img-fluid"
-        />
-      </div>
+<style>
+  /* Fondo general tipo app */
+  body {
+    background: linear-gradient(135deg, #f0f4ff, #fdfbff);
+  }
 
-      <!-- Nombre -->
-      <h6 class="fw-bold mb-0">{{ item.name | titlecase }}</h6>
-    </div>
-  </a>
+  /* Card */
+  .pokemon-card {
+    transition: all 0.3s ease;
+    background: rgba(255, 255, 255, 0.7);
+    backdrop-filter: blur(10px);
+    border-radius: 1.5rem;
+    position: relative;
+    overflow: hidden;
+  }
+
+  /* Glow background */
+  .pokemon-card::before {
+    content: "";
+    position: absolute;
+    inset: 0;
+    background: radial-gradient(
+      circle at top,
+      rgba(0, 123, 255, 0.15),
+      transparent 70%
+    );
+    opacity: 0;
+    transition: opacity 0.3s ease;
+  }
+
+  .pokemon-card:hover::before {
+    opacity: 1;
+  }
+
+  /* Hover */
+  .pokemon-card:hover {
+    transform: translateY(-10px) scale(1.04);
+    box-shadow: 0 20px 45px rgba(0, 0, 0, 0.15);
+  }
+
+  /* Imagen */
+  .pokemon-img-wrapper {
+    min-height: 140px; /* en vez de height */
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+
+  .pokemon-card img {
+    max-height: 130px;
+    width: auto;
+    height: auto;
+    object-fit: contain; /* clave */
+  }
+
+  .pokemon-card:hover img {
+    transform: scale(1.2) rotate(-5deg);
+  }
+
+  /* Nombre */
+  .pokemon-name {
+    font-size: 0.95rem;
+    letter-spacing: 0.5px;
+  }
+
+  /* Badge ID */
+  .pokemon-id {
+    position: absolute;
+    top: 10px;
+    right: 12px;
+    font-size: 0.75rem;
+    background: #000;
+    color: #fff;
+    padding: 4px 8px;
+    border-radius: 999px;
+    opacity: 0.8;
+  }
+</style>
+
+<div class="row g-4">
+  @for (item of pokemones(); track item.id) {
+  <div class="col-12 col-sm-6 col-md-4 col-lg-3">
+    <a [routerLink]="['/pokemons', item.id]" class="text-decoration-none">
+      <div class="pokemon-card h-100 shadow-sm text-center p-3">
+        <!-- ID -->
+        <span class="pokemon-id">#{{ item.id }}</span>
+
+        <!-- Imagen -->
+        <div class="pokemon-img-wrapper mb-3">
+          <img
+            [src]="item.sprites.other?.['official-artwork']?.front_default"
+            alt="pokemon-image"
+            class="img-fluid"
+          />
+        </div>
+
+        <!-- Nombre -->
+        <h6 class="fw-bold pokemon-name mb-0 text-dark">
+          {{ item.name | titlecase }}
+        </h6>
+      </div>
+    </a>
+  </div>
+  }
 </div>
-}

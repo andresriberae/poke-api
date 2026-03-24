@@ -21,7 +21,7 @@ export class PokemonService {
     return this.http
       .get<PokeAPI>(`${environment.ApiUrlPokedesk}/pokemon/`, {
         params: {
-          limit: 10,
+          limit: 20,
           offset: 0,
         },
       })
